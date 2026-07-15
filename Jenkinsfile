@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
 
         stage('Verify Tools') {
             steps {
@@ -15,6 +10,12 @@ pipeline {
                 sh 'git --version'
                 sh 'docker --version'
                 sh 'kubectl version --client'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t manas2994/frontend:v1 ./src/frontend'
             }
         }
     }
