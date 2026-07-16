@@ -9,6 +9,7 @@ pipeline {
                 git --version
                 docker --version
                 kubectl version --client
+                kubectl get nodes
                 '''
             }
         }
@@ -40,6 +41,7 @@ pipeline {
         stage('Deploy to GKE') {
             steps {
                 sh '''
+                kubectl get deployment frontend
                 kubectl set image deployment/frontend frontend=manas2994/frontend:${BUILD_NUMBER}
                 kubectl rollout status deployment/frontend
                 '''
